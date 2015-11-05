@@ -1,0 +1,6 @@
+--cpu Cortex-M3
+".\objects\lab4.o"
+--strict --scatter ".\Objects\lab4.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\lab4.map" -o .\Objects\lab4.axf
