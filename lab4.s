@@ -85,20 +85,22 @@ size1
 	ALIGN
 sort PROC
 	;; include here the body of your routine
-	PUSH {LR,R1,R2,R3,R4,R5,R6,R7,R8,R9}
+	PUSH {LR,R1,R2,R3,R4,R5,R6,R7}
 	
-	MOV R8, #2
+	MOV R7, #2
 	CMP	R3, #1
 	BNE part2
-	LDRB R0, [R1]
-	STRB R0, [R9]
-	POP {LR,R1,R2,R3,R4,R5,R6,R7,R8,R9}
+	LDRB R0, [R2]
+	STRB R0, [R1]
+	POP {LR,R1,R2,R3,R4,R5,R6,R7}
 	BX LR
 	
 part2
-	;R1 is the location of the start of the string we copied from byte copy
-	;R2 is a new location under R1 0x20000400
+	;R1 is a new location under R2 0x20000400
+	;R2 is the location of the start of the string we copied from byte copy
 	;R3 is the size in bytes of the string
+	;R5 is the size of sublist2 which we calculate
+	;R6 is the size of sublist1 which we calculate
 	CMP	R3, #2
 	BNE part3
 	ADD	R4, R2, #1	; R4 (sublist2)
@@ -106,10 +108,10 @@ part2
 	MOV R6, #1 ;Size of sublist1
 	BL merge
 
-	POP {LR,R1,R2,R3,R4,R5,R6,R7,R8,R9}
+	POP {LR,R1,R2,R3,R4,R5,R6,R7}
 	BX LR
 part3
-	SDIV R3, R3, R8
+	SDIV R3, R3, R7
 	MOV	R6, R3 ; Size of sublist1
 	BL		sort
 	
@@ -118,7 +120,7 @@ part3
 	BL sort
 	
 	BL merge
-	POP {LR,R1,R2,R3,R4,R5,R6,R7,R8,R9}
+	POP {LR,R1,R2,R3,R4,R5,R6,R7}
 	bx	lr
 	
 	ENDP
